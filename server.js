@@ -72,6 +72,8 @@ async function generateWorksheetQuestions(prompt) {
 
 // API endpoint to generate worksheet questions
 app.post('/api/generate-questions', async (req, res) => {
+  const { prompt } = req.body;
+  const questions = await generateWorksheetQuestions(prompt);
   // ... existing code ...
 });
 
