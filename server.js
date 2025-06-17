@@ -53,41 +53,6 @@ async function generateImage(prompt, model) {
   }
 }
 
-// Model comparison endpoint
-app.post('/api/compare-models', async (req, res) => {
-  try {
-    const { prompt } = req.body;
-    
-    if (!prompt) {
-      return res.status(400).json({ error: 'Prompt is required' });
-    }
-
-    const [imagen2Result, imagen3Result] = await Promise.all([
-      generateImage(prompt, imagen2Model),
-      generateImage(prompt, imagen3Model)
-    ]);
-
-    res.json({
-      success: true,
-      data: {
-        imagen2: {
-          imageUrl: imagen2Result.image,
-          model: imagen2Model
-        },
-        imagen3: {
-          imageUrl: imagen3Result.image,
-          model: imagen3Model
-        }
-      }
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
-  }
-});
-
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 }); 
