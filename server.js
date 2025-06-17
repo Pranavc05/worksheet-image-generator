@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const { VertexAI } = require('@google-cloud/vertexai');
 const mongoose = require('mongoose');
 
 const app = express();
@@ -10,12 +9,6 @@ const port = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-
-// Initialize Vertex AI
-const vertexai = new VertexAI({
-  project: process.env.GOOGLE_CLOUD_PROJECT,
-  location: 'us-central1',
-});
 
 // Initialize Imagen models
 const imagen2Model = 'imagegeneration@002';
