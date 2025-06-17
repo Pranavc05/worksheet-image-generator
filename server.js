@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const { OpenAI } = require('openai');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -13,6 +14,9 @@ app.use(express.json());
 // Initialize Imagen models
 const imagen2Model = 'imagegeneration@002';
 const imagen3Model = 'imagegeneration@003';
+
+// Initialize OpenAI
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/imagegen', {
