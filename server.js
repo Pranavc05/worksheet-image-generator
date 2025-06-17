@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { VertexAI } = require('@google-cloud/vertexai');
+const mongoose = require('mongoose');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -19,6 +20,20 @@ const vertexai = new VertexAI({
 // Initialize Imagen models
 const imagen2Model = 'imagegeneration@002';
 const imagen3Model = 'imagegeneration@003';
+
+// MongoDB connection
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/imagegen', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const userImageCountSchema = new mongoose.Schema({
+  userId: { type: String, required: true, unique: true },
+  month: { type: String, required: true }, // Format: YYYY-MM
+  count: { type: Number, default: 0 },
+});
+
+const UserImageCount = mongoose.model('UserImageCount', userImageCountSchema);
 
 async function generateImage(prompt, model) {
   try {

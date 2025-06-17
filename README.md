@@ -1,96 +1,60 @@
-# Imagen API
+# Image Generator for SpedTree Worksheets
 
-This API provides endpoints to interact with Google Cloud's Vertex AI Imagen models for image generation. It supports both Imagen 2 and Imagen 3 Fast models and generates cartoon-style images with specific parameters.
+## Project Overview
+SpedTree's image generation API for creating educational worksheet images using Vertex AI's Imagen.
 
-## Prerequisites
+## Setup Progress (as of first session)
 
-1. Node.js and npm installed
-2. MongoDB installed and running locally
-3. Google Cloud Project with Vertex AI API enabled
-4. Google Cloud Service Account with appropriate permissions
+### Completed Installations
+1. **Package Manager**
+   - Homebrew (Package Manager for macOS)
 
-## Setup
+2. **Version Control**
+   - Git is installed (version 2.39.3)
+   - SSH key configured with GitHub
+   - Repository created: https://github.com/Pranavc-SpedTree/Image-Gen
 
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+3. **MERN Stack Components**
+   - Node.js (v24.1.0)
+   - npm (v11.3.0)
+   - MongoDB Community Edition
+   - MongoDB running as a service
 
-3. Create a `.env` file in the root directory with the following variables:
-   ```
-   PORT=3000
-   MONGODB_URI=mongodb://localhost:27017/imagen-api
-   GOOGLE_CLOUD_PROJECT=your-project-id
-   GOOGLE_APPLICATION_CREDENTIALS=path/to/your/service-account-key.json
-   ```
+4. **Cloud Setup**
+   - Google Cloud SDK installed
 
-4. Start the server:
-   ```bash
-   npm run dev
-   ```
+### Next Steps
+1. Complete GCP Account Setup:
+   - Create GCP account
+   - Set up a new project
+   - Enable Vertex AI API
+   - Set up billing
+   - Create service account credentials
 
-## API Endpoints
+2. Create Frontend Repository:
+   - Set up separate repository for frontend code
+   - Initialize React application
 
-### Generate Image
-- **POST** `/api/generate-image`
-- **Body**:
-  ```json
-  {
-    "prompt": "your image description",
-    "model": "imagen3" // or "imagen2", defaults to "imagen3"
-  }
-  ```
-- **Response**:
-  ```json
-  {
-    "success": true,
-    "data": {
-      "imageUrl": "generated-image-url",
-      "model": "model-used"
-    }
-  }
-  ```
+## Project Requirements
 
-### Compare Models
-- **POST** `/api/compare-models`
-- **Body**:
-  ```json
-  {
-    "prompt": "your image description"
-  }
-  ```
-- **Response**:
-  ```json
-  {
-    "success": true,
-    "data": {
-      "imagen2": {
-        "imageUrl": "imagen2-generated-url",
-        "model": "imagegeneration@002"
-      },
-      "imagen3": {
-        "imageUrl": "imagen3-generated-url",
-        "model": "imagegeneration@003"
-      }
-    }
-  }
-  ```
+### API Specifications
+- Image generation limit: 100 images per user per month
+- Authentication required
+- Image dimensions: 50x50 pixels
+- Support for all image formats
 
-## Image Generation Parameters
-
+### UI Requirements
 - Style: Cartoon
-- Size: 50x50 pixels
 - Background: Bright white
 
-## Error Handling
+### Database Requirements
+- Store image metadata
+- Track usage counts
+- Track image generation history
 
-The API returns appropriate error messages with corresponding HTTP status codes:
-- 400: Bad Request (missing parameters)
-- 500: Internal Server Error (generation or server issues)
+## Repository Structure
+- Backend (Current repository)
+- Frontend (To be created)
 
 ## Notes
-
-- Imagen 3 Fast is generally recommended for faster generation times
-- Both models can be compared using the `/api/compare-models` endpoint to determine which works best for your specific use case
-- The API automatically adds style parameters to ensure cartoon style and white background 
+This project is part of SpedTree's platform for special education professionals, specifically focusing on generating images for educational worksheets. 
