@@ -53,33 +53,6 @@ async function generateImage(prompt, model) {
   }
 }
 
-// API Routes
-app.post('/api/generate-image', async (req, res) => {
-  try {
-    const { prompt, model = 'imagen3' } = req.body;
-    
-    if (!prompt) {
-      return res.status(400).json({ error: 'Prompt is required' });
-    }
-
-    const selectedModel = model === 'imagen3' ? imagen3Model : imagen2Model;
-    const result = await generateImage(prompt, selectedModel);
-
-    res.json({
-      success: true,
-      data: {
-        imageUrl: result.image,
-        model: selectedModel
-      }
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
-  }
-});
-
 // Model comparison endpoint
 app.post('/api/compare-models', async (req, res) => {
   try {
