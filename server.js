@@ -96,6 +96,13 @@ app.post('/api/generate-questions', async (req, res) => {
 // API endpoint to generate images for questions
 app.post('/api/generate-image', async (req, res) => {
   const { prompt } = req.body;
+  // Placeholder userId (replace with real user authentication later)
+  const userId = 'test-user';
+  const month = new Date().toISOString().slice(0, 7); // YYYY-MM
+  let userCount = await UserImageCount.findOne({ userId, month });
+  if (!userCount) {
+    userCount = new UserImageCount({ userId, month, count: 0 });
+  }
   try {
     const imageUrl = await generateImageForQuestion(prompt);
     res.json({ success: true, imageUrl });
