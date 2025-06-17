@@ -70,6 +70,18 @@ async function generateWorksheetQuestions(prompt) {
   return response.choices[0].message.content;
 }
 
+// Function to generate an image using OpenAI GPT-Image-1
+async function generateImageForQuestion(prompt) {
+  const response = await openai.images.generate({
+    model: 'gpt-image-1',
+    prompt: `Generate a clipart-style image for the following: ${prompt}`,
+    quality: 'low',
+    style: 'vivid',
+    size: '256x256',
+  });
+  return response.data[0].url;
+}
+
 // API endpoint to generate worksheet questions
 app.post('/api/generate-questions', async (req, res) => {
   const { prompt } = req.body;
