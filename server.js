@@ -93,6 +93,17 @@ app.post('/api/generate-questions', async (req, res) => {
   }
 });
 
+// API endpoint to generate images for questions
+app.post('/api/generate-image', async (req, res) => {
+  const { prompt } = req.body;
+  try {
+    const imageUrl = await generateImageForQuestion(prompt);
+    res.json({ success: true, imageUrl });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 }); 
