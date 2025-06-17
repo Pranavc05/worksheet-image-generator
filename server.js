@@ -70,6 +70,11 @@ async function generateWorksheetQuestions(prompt) {
   return response.choices[0].message.content;
 }
 
+// API endpoint to generate worksheet questions
+app.post('/api/generate-questions', async (req, res) => {
+  // ... existing code ...
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 }); 
