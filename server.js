@@ -57,6 +57,19 @@ async function generateImage(prompt, model) {
   }
 }
 
+// Function to generate worksheet questions using OpenAI GPT-4o-mini
+async function generateWorksheetQuestions(prompt) {
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
+    messages: [
+      { role: 'system', content: 'You are an expert at creating worksheet questions for children.' },
+      { role: 'user', content: prompt },
+    ],
+  });
+
+  return response.choices[0].message.content;
+}
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 }); 
