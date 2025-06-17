@@ -103,8 +103,13 @@ app.post('/api/generate-image', async (req, res) => {
   if (!userCount) {
     userCount = new UserImageCount({ userId, month, count: 0 });
   }
+  if (userCount.count >= 100) {
+    return res.status(429).json({ success: false, error: 'Image generation limit reached for this month.' });
+  }
   try {
     const imageUrl = await generateImageForQuestion(prompt);
+    userCount.count += 1;
+    await userCount.save();
     res.json({ success: true, imageUrl });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
