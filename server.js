@@ -48,7 +48,7 @@ async function generateImageForQuestion(prompt) {
     model: 'gpt-image-1',
     prompt: `Generate a clipart-style image for the following: ${prompt}`,
     quality: 'low',
-    size: '256x256',
+    size: '1024x1024',
   });
   return response.data[0].url;
 }
