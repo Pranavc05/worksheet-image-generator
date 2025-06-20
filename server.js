@@ -53,6 +53,11 @@ async function generateImageForQuestion(prompt) {
   return response.data[0].url;
 }
 
+// Function to generate a master image prompt based on worksheet questions
+async function generateMasterImagePrompt(questions) {
+  // AI logic will go here
+}
+
 // API endpoint to generate worksheet questions
 app.post('/api/generate-questions', async (req, res) => {
   const { prompt } = req.body;
