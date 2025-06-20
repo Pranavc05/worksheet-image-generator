@@ -71,12 +71,17 @@ ${questions}`;
   return response.choices[0].message.content;
 }
 
-// API endpoint to generate worksheet questions
-app.post('/api/generate-questions', async (req, res) => {
-  const { prompt } = req.body;
+// API endpoint to generate a full worksheet with a relevant image
+app.post('/api/generate-worksheet', async (req, res) => {
   try {
+    const { prompt } = req.body;
+    
+    // Step 1: Generate worksheet questions
     const questions = await generateWorksheetQuestions(prompt);
-    res.json({ success: true, questions });
+
+    // More steps will follow...
+    
+    res.json({ success: true, questions }); // Temporary response
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
