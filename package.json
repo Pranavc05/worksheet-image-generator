@@ -20,8 +20,10 @@
   },
   "homepage": "https://github.com/Pranavc-SpedTree/Image-Gen#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
-    "openai": "^5.3.0",
-    "mongoose": "^8.3.2"
+    "express": "^5.1.0",
+    "mongoose": "^8.16.0",
+    "openai": "^5.5.1"
   }
 }
