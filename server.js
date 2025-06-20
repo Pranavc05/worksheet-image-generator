@@ -76,6 +76,18 @@ app.post('/api/generate-worksheet', async (req, res) => {
   try {
     const { prompt } = req.body;
     
+    // Placeholder userId (replace with real user authentication later)
+    const userId = 'test-user'; 
+    const month = new Date().toISOString().slice(0, 7); // YYYY-MM
+    let userCount = await UserImageCount.findOne({ userId, month });
+
+    if (!userCount) {
+      userCount = new UserImageCount({ userId, month, count: 0 });
+    }
+    if (userCount.count >= 100) {
+      return res.status(429).json({ success: false, error: 'Image generation limit reached for this month.' });
+    }
+    
     // Step 1: Generate worksheet questions
     const questions = await generateWorksheetQuestions(prompt);
 
@@ -85,8 +97,11 @@ app.post('/api/generate-worksheet', async (req, res) => {
     // Step 3: Generate the actual image
     const imageUrl = await generateImage(imagePrompt);
 
-    // Final response will be here...
-    res.json({ success: true, questions, imageUrl }); // Updated temporary response
+    // Increment and save the user's count after successful generation
+    userCount.count += 1;
+    await userCount.save();
+
+    res.json({ success: true, questions, imageUrl });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
