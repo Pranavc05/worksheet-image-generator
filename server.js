@@ -43,7 +43,7 @@ async function generateWorksheetQuestions(prompt) {
 }
 
 // Function to generate an image using OpenAI GPT-Image-1
-async function generateImageForQuestion(prompt) {
+async function generateImage(prompt) {
   const response = await openai.images.generate({
     model: 'dall-e-3',
     prompt: `Generate a clipart-style image for the following: ${prompt}`,
@@ -79,9 +79,14 @@ app.post('/api/generate-worksheet', async (req, res) => {
     // Step 1: Generate worksheet questions
     const questions = await generateWorksheetQuestions(prompt);
 
-    // More steps will follow...
-    
-    res.json({ success: true, questions }); // Temporary response
+    // Step 2: Generate a master image prompt from the questions
+    const imagePrompt = await generateMasterImagePrompt(questions);
+
+    // Step 3: Generate the actual image
+    const imageUrl = await generateImage(imagePrompt);
+
+    // Final response will be here...
+    res.json({ success: true, questions, imageUrl }); // Updated temporary response
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -101,7 +106,7 @@ app.post('/api/generate-image', async (req, res) => {
     return res.status(429).json({ success: false, error: 'Image generation limit reached for this month.' });
   }
   try {
-    const imageUrl = await generateImageForQuestion(prompt);
+    const imageUrl = await generateImage(prompt);
     userCount.count += 1;
     await userCount.save();
     res.json({ success: true, imageUrl });
