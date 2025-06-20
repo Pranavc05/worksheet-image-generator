@@ -45,9 +45,9 @@ async function generateWorksheetQuestions(prompt) {
 // Function to generate an image using OpenAI GPT-Image-1
 async function generateImageForQuestion(prompt) {
   const response = await openai.images.generate({
-    model: 'gpt-image-1',
+    model: 'dall-e-3',
     prompt: `Generate a clipart-style image for the following: ${prompt}`,
-    quality: 'low',
+    quality: 'standard',
     size: '1024x1024',
   });
   return response.data[0].url;
