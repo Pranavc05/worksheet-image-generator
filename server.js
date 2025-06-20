@@ -55,7 +55,20 @@ async function generateImageForQuestion(prompt) {
 
 // Function to generate a master image prompt based on worksheet questions
 async function generateMasterImagePrompt(questions) {
-  // AI logic will go here
+  const masterPromptInstruction = `Analyze the following worksheet questions and create a single, detailed DALL-E 3 prompt to generate one image that serves as a visual aid for all questions. The image should be in a simple, friendly cartoon/clipart style, suitable for young children on a worksheet.
+
+Worksheet Questions:
+${questions}`;
+
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
+    messages: [
+      { role: 'system', content: 'You are a creative director designing a single, helpful illustration for a children\'s worksheet.' },
+      { role: 'user', content: masterPromptInstruction },
+    ],
+  });
+
+  return response.choices[0].message.content;
 }
 
 // API endpoint to generate worksheet questions
