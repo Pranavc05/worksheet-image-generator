@@ -6,6 +6,8 @@ function App() {
   const [additionalPrompt, setAdditionalPrompt] = useState('');
   const [includeImages, setIncludeImages] = useState(false);
   const [worksheetQuestions, setWorksheetQuestions] = useState([]);
+  const [questionImages, setQuestionImages] = useState([]);
+  const [loadingImages, setLoadingImages] = useState([]);
 
   const handleGenerate = async () => {
     try {
@@ -24,6 +26,13 @@ function App() {
     } catch (error) {
       console.error('Error generating worksheet:', error);
     }
+  };
+
+  const handleGenerateImage = (idx) => {
+    const newLoading = [...loadingImages];
+    newLoading[idx] = true;
+    setLoadingImages(newLoading);
+    // API call will go here
   };
 
   return (
@@ -55,7 +64,9 @@ function App() {
           {worksheetQuestions.map((q, idx) => (
             <div className="worksheet-question" key={idx}>
               {q}
-              <button className="generate-image-btn">Generate Image</button>
+              <button className="generate-image-btn" onClick={() => handleGenerateImage(idx)}>
+                Generate Image
+              </button>
             </div>
           ))}
         </div>
