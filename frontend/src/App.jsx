@@ -11,7 +11,12 @@ function App() {
         <textarea className="additional-prompt" placeholder="Additional Prompt" />
         <button className="generate-btn">Generate</button>
       </aside>
-      {/* Main worksheet area will go here */}
+      <main className="worksheet-area">
+        <h2>GENERATED WORKSHEET</h2>
+        <div className="questions-list">
+          {/* Questions will be rendered here */}
+        </div>
+      </main>
     </div>
   );
 }
