@@ -28,11 +28,27 @@ function App() {
     }
   };
 
-  const handleGenerateImage = (idx) => {
+  const handleGenerateImage = async (idx) => {
     const newLoading = [...loadingImages];
     newLoading[idx] = true;
     setLoadingImages(newLoading);
-    // API call will go here
+    try {
+      const response = await fetch('/api/generate-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: worksheetQuestions[idx] }),
+      });
+      const data = await response.json();
+      const newImages = [...questionImages];
+      newImages[idx] = data.imageUrl;
+      setQuestionImages(newImages);
+    } catch (error) {
+      console.error('Error generating image:', error);
+    } finally {
+      const newLoadingDone = [...loadingImages];
+      newLoadingDone[idx] = false;
+      setLoadingImages(newLoadingDone);
+    }
   };
 
   return (
@@ -64,9 +80,12 @@ function App() {
           {worksheetQuestions.map((q, idx) => (
             <div className="worksheet-question" key={idx}>
               {q}
-              <button className="generate-image-btn" onClick={() => handleGenerateImage(idx)}>
-                Generate Image
+              <button className="generate-image-btn" onClick={() => handleGenerateImage(idx)} disabled={loadingImages[idx]}>
+                {loadingImages[idx] ? 'Loading...' : 'Generate Image'}
               </button>
+              {questionImages[idx] && (
+                <img src={questionImages[idx]} alt="Generated visual" className="worksheet-image" />
+              )}
             </div>
           ))}
         </div>
