@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [category, setCategory] = useState('');
+  const [additionalPrompt, setAdditionalPrompt] = useState('');
+
   return (
     <div className="app-container">
       <aside className="sidebar">
-        <select className="category-select">
+        <select className="category-select" value={category} onChange={e => setCategory(e.target.value)}>
           <option value="">Select Category</option>
           <option value="math">Math</option>
           <option value="science">Science</option>
@@ -21,7 +25,7 @@ function App() {
         <label className="include-images-label">
           <input type="checkbox" /> Check to include images
         </label>
-        <textarea className="additional-prompt" placeholder="Additional Prompt" />
+        <textarea className="additional-prompt" placeholder="Additional Prompt" value={additionalPrompt} onChange={e => setAdditionalPrompt(e.target.value)} />
         <button className="generate-btn">Generate</button>
       </aside>
       <main className="worksheet-area">
