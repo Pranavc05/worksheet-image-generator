@@ -6,6 +6,12 @@ function App() {
   const [additionalPrompt, setAdditionalPrompt] = useState('');
   const [includeImages, setIncludeImages] = useState(false);
 
+  const handleGenerate = () => {
+    console.log('Category:', category);
+    console.log('Additional Prompt:', additionalPrompt);
+    console.log('Include Images:', includeImages);
+  };
+
   return (
     <div className="app-container">
       <aside className="sidebar">
@@ -27,7 +33,7 @@ function App() {
           <input type="checkbox" checked={includeImages} onChange={e => setIncludeImages(e.target.checked)} /> Check to include images
         </label>
         <textarea className="additional-prompt" placeholder="Additional Prompt" value={additionalPrompt} onChange={e => setAdditionalPrompt(e.target.value)} />
-        <button className="generate-btn">Generate</button>
+        <button className="generate-btn" onClick={handleGenerate}>Generate</button>
       </aside>
       <main className="worksheet-area">
         <h2>GENERATED WORKSHEET</h2>
