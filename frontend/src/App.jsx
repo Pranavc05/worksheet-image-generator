@@ -4,6 +4,7 @@ import './App.css';
 function App() {
   const [category, setCategory] = useState('');
   const [additionalPrompt, setAdditionalPrompt] = useState('');
+  const [includeImages, setIncludeImages] = useState(false);
 
   return (
     <div className="app-container">
@@ -23,7 +24,7 @@ function App() {
           <option value="health">Health</option>
         </select>
         <label className="include-images-label">
-          <input type="checkbox" /> Check to include images
+          <input type="checkbox" checked={includeImages} onChange={e => setIncludeImages(e.target.checked)} /> Check to include images
         </label>
         <textarea className="additional-prompt" placeholder="Additional Prompt" value={additionalPrompt} onChange={e => setAdditionalPrompt(e.target.value)} />
         <button className="generate-btn">Generate</button>
