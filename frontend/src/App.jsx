@@ -5,6 +5,7 @@ function App() {
   const [category, setCategory] = useState('');
   const [additionalPrompt, setAdditionalPrompt] = useState('');
   const [includeImages, setIncludeImages] = useState(false);
+  const [worksheetQuestions, setWorksheetQuestions] = useState([]);
 
   const handleGenerate = async () => {
     try {
@@ -14,6 +15,11 @@ function App() {
         body: JSON.stringify({ category, additionalPrompt, includeImages }),
       });
       const data = await response.json();
+      // Assume questions is a string, split into array by newlines or numbers
+      const questionsArr = data.questions
+        ? data.questions.split(/\n\d+\.\s|\n(?=\d+\.)/).filter(q => q.trim())
+        : [];
+      setWorksheetQuestions(questionsArr);
       console.log('Worksheet response:', data);
     } catch (error) {
       console.error('Error generating worksheet:', error);
@@ -46,7 +52,11 @@ function App() {
       <main className="worksheet-area">
         <h2>GENERATED WORKSHEET</h2>
         <div className="questions-list">
-          {/* Questions will be rendered here */}
+          {worksheetQuestions.map((q, idx) => (
+            <div className="worksheet-question" key={idx}>
+              {q}
+            </div>
+          ))}
         </div>
       </main>
     </div>
