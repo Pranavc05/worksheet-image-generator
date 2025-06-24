@@ -6,10 +6,18 @@ function App() {
   const [additionalPrompt, setAdditionalPrompt] = useState('');
   const [includeImages, setIncludeImages] = useState(false);
 
-  const handleGenerate = () => {
-    console.log('Category:', category);
-    console.log('Additional Prompt:', additionalPrompt);
-    console.log('Include Images:', includeImages);
+  const handleGenerate = async () => {
+    try {
+      const response = await fetch('/api/generate-worksheet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ category, additionalPrompt, includeImages }),
+      });
+      const data = await response.json();
+      console.log('Worksheet response:', data);
+    } catch (error) {
+      console.error('Error generating worksheet:', error);
+    }
   };
 
   return (
