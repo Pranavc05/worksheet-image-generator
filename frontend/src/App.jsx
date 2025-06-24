@@ -55,6 +55,7 @@ function App() {
           {worksheetQuestions.map((q, idx) => (
             <div className="worksheet-question" key={idx}>
               {q}
+              <button className="generate-image-btn">Generate Image</button>
             </div>
           ))}
         </div>
