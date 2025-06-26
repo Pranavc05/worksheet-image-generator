@@ -11,10 +11,12 @@ function App() {
 
   const handleGenerate = async () => {
     try {
+      // Combine category and additionalPrompt into a single prompt string
+      const prompt = `Generate a worksheet for the category: ${category}. ${additionalPrompt}`;
       const response = await fetch('/api/generate-worksheet', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ category, additionalPrompt, includeImages }),
+        body: JSON.stringify({ prompt }),
       });
       const data = await response.json();
       // Assume questions is a string, split into array by newlines or numbers
@@ -78,7 +80,7 @@ function App() {
         <h2>GENERATED WORKSHEET</h2>
         <div className="questions-list">
           {worksheetQuestions.map((q, idx) => (
-            <div className="worksheet-question" key={idx}>
+            <div className="worksheet-question-card" key={idx}>
               {q}
               <button className="generate-image-btn" onClick={() => handleGenerateImage(idx)} disabled={loadingImages[idx]}>
                 {loadingImages[idx] ? 'Loading...' : 'Generate Image'}
