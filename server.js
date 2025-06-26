@@ -49,7 +49,7 @@ async function generateImage(prompt) {
     prompt: `Generate a clipart-style image for the following: ${prompt}`,
     quality: 'standard',
     size: '1024x1024',
-  });
+    });
   return response.data[0].url;
 }
 
@@ -75,33 +75,9 @@ ${questions}`;
 app.post('/api/generate-worksheet', async (req, res) => {
   try {
     const { prompt } = req.body;
-    
-    // Placeholder userId (replace with real user authentication later)
-    const userId = 'test-user'; 
-    const month = new Date().toISOString().slice(0, 7); // YYYY-MM
-    let userCount = await UserImageCount.findOne({ userId, month });
-
-    if (!userCount) {
-      userCount = new UserImageCount({ userId, month, count: 0 });
-    }
-    if (userCount.count >= 100) {
-      return res.status(429).json({ success: false, error: 'Image generation limit reached for this month.' });
-    }
-    
     // Step 1: Generate worksheet questions
     const questions = await generateWorksheetQuestions(prompt);
-
-    // Step 2: Generate a master image prompt from the questions
-    const imagePrompt = await generateMasterImagePrompt(questions);
-
-    // Step 3: Generate the actual image
-    const imageUrl = await generateImage(imagePrompt);
-
-    // Increment and save the user's count after successful generation
-    userCount.count += 1;
-    await userCount.save();
-
-    res.json({ success: true, questions, imageUrl });
+    res.json({ success: true, questions });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -109,7 +85,7 @@ app.post('/api/generate-worksheet', async (req, res) => {
 
 // API endpoint to generate images for questions
 app.post('/api/generate-image', async (req, res) => {
-  const { prompt } = req.body;
+    const { prompt } = req.body;
   // Placeholder userId (replace with real user authentication later)
   const userId = 'test-user';
   const month = new Date().toISOString().slice(0, 7); // YYYY-MM
