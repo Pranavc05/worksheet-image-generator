@@ -58,6 +58,21 @@ body, .app-container {
   margin-right: 32px;
 }
 
+.category-select,
+.additional-prompt {
+  color: #222;
+}
+
+.category-select::placeholder,
+.additional-prompt::placeholder {
+  color: #888;
+  opacity: 1;
+}
+
+.include-images-label {
+  color: #222;
+}
+
 .category-select {
   width: 100%;
   padding: 8px 10px;
