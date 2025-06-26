@@ -164,3 +164,22 @@
   border-radius: 10px;
   background: #e0e0e0;
 }
+
+.print-btn {
+  background: #4663fa;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  margin-left: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.print-btn:hover {
+  background: #2746d7;
+}

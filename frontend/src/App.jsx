@@ -77,7 +77,12 @@ function App() {
         <button className="generate-btn" onClick={handleGenerate}>Generate</button>
       </aside>
       <main className="worksheet-area">
-        <h2>GENERATED WORKSHEET</h2>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h2>GENERATED WORKSHEET</h2>
+          <button className="print-btn" onClick={() => window.print()}>
+            <span role="img" aria-label="print">🖨️</span> Print
+          </button>
+        </div>
         <div className="questions-list">
           {worksheetQuestions.map((q, idx) => (
             <div className="worksheet-question-card" key={idx}>
