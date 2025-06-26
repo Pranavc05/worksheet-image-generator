@@ -92,6 +92,12 @@ body, .app-container {
 .include-images-label input[type="checkbox"] {
   margin-right: 8px;
   accent-color: #4caf50;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 1.5px solid #bdbdbd;
+  background: #fff;
+  vertical-align: middle;
 }
 
 .additional-prompt {
