@@ -86,3 +86,25 @@
   margin-bottom: 20px;
   resize: none;
 }
+
+.generate-btn {
+  width: 100%;
+  background: #4663fa;
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  transition: background 0.2s;
+}
+.generate-btn:disabled {
+  background: #bfc6e6;
+  color: #fff;
+  cursor: not-allowed;
+}
+.generate-btn:hover:not(:disabled) {
+  background: #2746d7;
+}
