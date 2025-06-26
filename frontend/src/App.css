@@ -52,3 +52,37 @@
   align-items: flex-start;
   margin-right: 32px;
 }
+
+.category-select {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  margin-bottom: 16px;
+  font-size: 1rem;
+}
+
+.include-images-label {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+}
+
+.include-images-label input[type="checkbox"] {
+  margin-right: 8px;
+  accent-color: #4caf50;
+}
+
+.additional-prompt {
+  width: 100%;
+  min-height: 70px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  padding: 8px 10px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  resize: none;
+}
