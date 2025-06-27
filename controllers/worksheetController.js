@@ -26,7 +26,7 @@ function parseQuestionsResponse(response) {
     for (const line of lines) {
       console.log('Processing line:', line);
       // Look for lines that contain question content and end with ?
-      if (line.includes('?') && !line.includes('**') && !line.includes('Answer') && !line.includes('Sure!')) {
+      if (line.includes('?') && line.trim().length > 0 && !line.includes('Sure!')) {
         // Clean up the line and extract the question
         let question = line
           .replace(/^\d+\.\s*/, '') // Remove numbering
