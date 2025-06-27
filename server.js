@@ -46,10 +46,10 @@ async function generateWorksheetQuestions(prompt) {
 async function generateImage(prompt) {
   const response = await openai.images.generate({
     model: 'dall-e-3',
-    prompt: `Generate a clipart-style image for the following: ${prompt}`,
+    prompt: `Create a simple, clear image that helps answer this question: ${prompt}`,
     quality: 'standard',
     size: '1024x1024',
-    });
+  });
   return response.data[0].url;
 }
 
