@@ -69,7 +69,7 @@ async function generateWorksheetQuestions(prompt) {
   
   const rawResponse = response.choices[0].message.content;
   const questions = parseQuestionsResponse(rawResponse);
-  return JSON.stringify(questions);
+  return questions;
 }
 
 // Generate an image for a question
