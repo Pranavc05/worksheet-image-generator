@@ -86,7 +86,10 @@ function App() {
           </button>
         </div>
         {loadingWorksheet ? (
-          <div className="worksheet-loading">Generating worksheet...</div>
+          <div className="worksheet-loading">
+            <div className="worksheet-spinner"></div>
+            Generating worksheet...
+          </div>
         ) : (
           <div className="questions-list">
             {worksheetQuestions.map((q, idx) => (
