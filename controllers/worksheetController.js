@@ -12,10 +12,11 @@ function parseQuestionsResponse(response) {
     const parsed = JSON.parse(response);
     console.log('Parsed as JSON:', parsed);
     if (parsed.questions && Array.isArray(parsed.questions)) {
-      return parsed.questions;
+      // Always return exactly 3 questions as strings
+      return parsed.questions.slice(0, 3).map(q => typeof q === 'string' ? q : q.question);
     }
     if (Array.isArray(parsed)) {
-      return parsed;
+      return parsed.slice(0, 3).map(q => typeof q === 'string' ? q : q.question);
     }
   } catch (e) {
     console.log('JSON parsing failed, trying text parsing...');
@@ -45,13 +46,13 @@ function parseQuestionsResponse(response) {
     console.log('Extracted questions:', questions);
     // If we found questions, return them
     if (questions.length > 0) {
-      return questions;
+      return questions.slice(0, 3).map(q => typeof q === 'string' ? q : q.question);
     }
   }
   
   // Fallback: return the response as a single question
   console.log('Using fallback - returning response as single question');
-  return [{ question: response }];
+  return [{ question: response }].slice(0, 3).map(q => typeof q === 'string' ? q : q.question);
 }
 
 // Generate worksheet questions
@@ -62,8 +63,8 @@ async function generateWorksheetQuestions(prompt) {
     temperature: 0,
     response_format: { type: "json_object" },
     messages: [
-      { role: 'system', content: 'You are a JSON generator that creates worksheet questions. You must respond with a JSON object containing an array of questions.' },
-      { role: 'user', content: `${prompt}\n\nReturn a JSON object with this exact structure:\n{"questions": [{"question": "What is 2 + 3?"}, {"question": "How many sides does a triangle have?"}]}\n\nEach question object must have exactly one field called "question".` },
+      { role: 'system', content: 'You are a JSON generator that creates worksheet questions. You must respond with a JSON object containing an array of exactly 3 questions, each as a string.' },
+      { role: 'user', content: `${prompt}\n\nReturn a JSON object with this exact structure:\n{"questions": ["What is 2 + 3?", "How many sides does a triangle have?", "What is the capital of France?"]}` },
     ],
   });
   
