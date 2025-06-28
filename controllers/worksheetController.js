@@ -69,6 +69,7 @@ async function generateWorksheetQuestions(prompt) {
   
   const rawResponse = response.choices[0].message.content;
   const questions = parseQuestionsResponse(rawResponse);
+  console.log('Final questions returned:', questions);
   return questions;
 }
 

@@ -88,7 +88,7 @@ function App() {
             <div className="worksheet-question-card" key={idx}>
               {q}
               <button className="generate-image-btn" onClick={() => handleGenerateImage(idx)} disabled={loadingImages[idx]}>
-                {loadingImages[idx] ? 'Loading...' : 'Generate Image'}
+                {loadingImages[idx] ? 'Loading...' : questionImages[idx] ? 'Re-Generate Image' : 'Generate Image'}
               </button>
               {questionImages[idx] && (
                 <img src={questionImages[idx]} alt="Generated visual" className="worksheet-image" />
