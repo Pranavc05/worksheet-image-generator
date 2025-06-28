@@ -12,11 +12,11 @@ function parseQuestionsResponse(response) {
     const parsed = JSON.parse(response);
     console.log('Parsed as JSON:', parsed);
     if (parsed.questions && Array.isArray(parsed.questions)) {
-      // Always return exactly 3 questions as objects with a 'goal' key
-      return parsed.questions.slice(0, 3).map(q => ({ goal: typeof q === 'string' ? q : q.goal || q.question }));
+      // Always return exactly 3 questions as strings
+      return parsed.questions.slice(0, 3).map(q => typeof q === 'string' ? q : q.question);
     }
     if (Array.isArray(parsed)) {
-      return parsed.slice(0, 3).map(q => ({ goal: typeof q === 'string' ? q : q.goal || q.question }));
+      return parsed.slice(0, 3).map(q => typeof q === 'string' ? q : q.question);
     }
   } catch (e) {
     console.log('JSON parsing failed, trying text parsing...');
@@ -38,7 +38,7 @@ function parseQuestionsResponse(response) {
         
         console.log('Extracted question:', question);
         if (question && question.length > 10 && question.includes('?')) {
-          questions.push({ goal: question });
+          questions.push(question);
         }
       }
     }
@@ -52,7 +52,7 @@ function parseQuestionsResponse(response) {
   
   // Fallback: return the response as a single question
   console.log('Using fallback - returning response as single question');
-  return [{ goal: response }];
+  return [response];
 }
 
 // Generate worksheet questions
@@ -63,8 +63,8 @@ async function generateWorksheetQuestions(prompt) {
     temperature: 0,
     response_format: { type: "json_object" },
     messages: [
-      { role: 'system', content: 'You are a JSON generator that creates worksheet goals. You must respond with a JSON object containing an array of exactly 3 objects, each with a key called "goal". Each goal should follow this template: By [Specific Date](Don\'t include any date in specific date brackets. It\'s for the user to modify manually) the student will...' },
-      { role: 'user', content: `${prompt}\n\nReturn a JSON object with this exact structure:\n{"questions": [{"goal": "By [Specific Date](Don't include any date in specific date brackets. It's for the user to modify manually) the student will..."}, {"goal": "By [Specific Date](Don't include any date in specific date brackets. It's for the user to modify manually) the student will..."}, {"goal": "By [Specific Date](Don't include any date in specific date brackets. It's for the user to modify manually) the student will..."}]}` },
+      { role: 'system', content: 'You are a JSON generator that creates worksheet questions. You must respond with a JSON object containing an array of exactly 3 questions, each as a string.' },
+      { role: 'user', content: `${prompt}\n\nReturn a JSON object with this exact structure:\n{"questions": ["What is 2 + 3?", "How many sides does a triangle have?", "What is the capital of France?"]}` },
     ],
   });
   
