@@ -11,6 +11,7 @@ function App() {
   const [loadingWorksheet, setLoadingWorksheet] = useState(false);
 
   const handleGenerate = async () => {
+    setLoadingWorksheet(true);
     try {
       // Combine category and additionalPrompt into a single prompt string
       const prompt = `Generate a worksheet for the category: ${category}. ${additionalPrompt}`;
@@ -20,7 +21,6 @@ function App() {
         body: JSON.stringify({ prompt }),
       });
       const data = await response.json();
-      // Update: handle data.questions as an array of objects
       let questionsArr = [];
       if (Array.isArray(data.questions)) {
         questionsArr = data.questions.map(q => (typeof q === 'string' ? q : q.question)).slice(0, 3);
@@ -29,6 +29,8 @@ function App() {
       console.log('Worksheet response:', data);
     } catch (error) {
       console.error('Error generating worksheet:', error);
+    } finally {
+      setLoadingWorksheet(false);
     }
   };
 
