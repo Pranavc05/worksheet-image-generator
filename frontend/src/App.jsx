@@ -8,6 +8,7 @@ function App() {
   const [worksheetQuestions, setWorksheetQuestions] = useState([]);
   const [questionImages, setQuestionImages] = useState([]);
   const [loadingImages, setLoadingImages] = useState([]);
+  const [loadingWorksheet, setLoadingWorksheet] = useState(false);
 
   const handleGenerate = async () => {
     try {
@@ -84,19 +85,23 @@ function App() {
             <span role="img" aria-label="print">🖨️</span> Print
           </button>
         </div>
-        <div className="questions-list">
-          {worksheetQuestions.map((q, idx) => (
-            <div className="worksheet-question-card" key={idx}>
-              {q}
-              <button className="generate-image-btn" onClick={() => handleGenerateImage(idx)} disabled={loadingImages[idx]}>
-                {loadingImages[idx] ? 'Loading...' : questionImages[idx] ? 'Re-Generate Image' : 'Generate Image'}
-              </button>
-              {questionImages[idx] && (
-                <img src={questionImages[idx]} alt="Generated visual" className="worksheet-image" />
-              )}
-            </div>
-          ))}
-        </div>
+        {loadingWorksheet ? (
+          <div className="worksheet-loading">Generating worksheet...</div>
+        ) : (
+          <div className="questions-list">
+            {worksheetQuestions.map((q, idx) => (
+              <div className="worksheet-question-card" key={idx}>
+                {q}
+                <button className="generate-image-btn" onClick={() => handleGenerateImage(idx)} disabled={loadingImages[idx]}>
+                  {loadingImages[idx] ? 'Loading...' : questionImages[idx] ? 'Re-Generate Image' : 'Generate Image'}
+                </button>
+                {questionImages[idx] && (
+                  <img src={questionImages[idx]} alt="Generated visual" className="worksheet-image" />
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </main>
     </div>
   );
