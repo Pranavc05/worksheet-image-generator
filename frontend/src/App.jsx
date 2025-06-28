@@ -19,10 +19,11 @@ function App() {
         body: JSON.stringify({ prompt }),
       });
       const data = await response.json();
-      // Assume questions is a string, split into array by newlines or numbers
-      const questionsArr = data.questions
-        ? data.questions.split(/\n\d+\.\s|\n(?=\d+\.)/).filter(q => q.trim())
-        : [];
+      // Update: handle data.questions as an array of objects
+      let questionsArr = [];
+      if (Array.isArray(data.questions)) {
+        questionsArr = data.questions.map(q => (typeof q === 'string' ? q : q.question));
+      }
       setWorksheetQuestions(questionsArr);
       console.log('Worksheet response:', data);
     } catch (error) {
