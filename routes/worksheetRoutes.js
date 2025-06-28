@@ -8,7 +8,7 @@ router.post('/generate-worksheet', async (req, res) => {
   try {
     const { prompt } = req.body;
     const questions = await worksheetController.generateWorksheetQuestions(prompt);
-    res.json({ success: true, questions });
+    res.json({ success: true, questions: questions.slice(0, 3) });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
