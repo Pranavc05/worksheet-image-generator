@@ -23,7 +23,7 @@ function App() {
       // Update: handle data.questions as an array of objects
       let questionsArr = [];
       if (Array.isArray(data.questions)) {
-        questionsArr = data.questions.map(q => (typeof q === 'string' ? q : q.question));
+        questionsArr = data.questions.map(q => (typeof q === 'string' ? q : q.question)).slice(0, 3);
       }
       setWorksheetQuestions(questionsArr);
       console.log('Worksheet response:', data);
