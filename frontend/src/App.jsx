@@ -9,8 +9,26 @@ function App() {
   const [questionImages, setQuestionImages] = useState([]);
   const [loadingImages, setLoadingImages] = useState([]);
   const [loadingWorksheet, setLoadingWorksheet] = useState(false);
+  const [categoryError, setCategoryError] = useState('');
+  const [promptError, setPromptError] = useState('');
 
   const handleGenerate = async () => {
+    // Clear previous errors
+    setCategoryError('');
+    setPromptError('');
+    
+    // Validate category selection
+    if (!category || category.trim() === '') {
+      setCategoryError('Please select a category');
+      return;
+    }
+    
+    // Validate additional prompt
+    if (!additionalPrompt || additionalPrompt.trim() === '') {
+      setPromptError('Please enter additional details for the worksheet');
+      return;
+    }
+    
     setLoadingWorksheet(true);
     try {
       // Combine category and additionalPrompt into a single prompt string
@@ -74,10 +92,12 @@ function App() {
           <option value="technology">Technology</option>
           <option value="health">Health</option>
         </select>
+        {categoryError && <div className="error-message">{categoryError}</div>}
         <label className="include-images-label">
           <input type="checkbox" checked={includeImages} onChange={e => setIncludeImages(e.target.checked)} /> Check to include images
         </label>
         <textarea className="additional-prompt" placeholder="Additional Prompt" value={additionalPrompt} onChange={e => setAdditionalPrompt(e.target.value)} />
+        {promptError && <div className="error-message">{promptError}</div>}
         <button className="generate-btn" onClick={handleGenerate}>Generate</button>
       </aside>
       <main className="worksheet-area">
@@ -91,7 +111,7 @@ function App() {
           <div className="worksheet-loading">
             <div className="worksheet-spinner"></div>
             Generating worksheet...
-          </div>
+      </div>
         ) : (
           <div className="questions-list">
             {worksheetQuestions.map((q, idx) => (
@@ -99,7 +119,7 @@ function App() {
                 {q}
                 <button className="generate-image-btn" onClick={() => handleGenerateImage(idx)} disabled={loadingImages[idx]}>
                   {loadingImages[idx] ? 'Loading...' : questionImages[idx] ? 'Re-Generate Image' : 'Generate Image'}
-                </button>
+        </button>
                 {questionImages[idx] && (
                   <img src={questionImages[idx]} alt="Generated visual" className="worksheet-image" />
                 )}
@@ -108,7 +128,7 @@ function App() {
           </div>
         )}
       </main>
-    </div>
+      </div>
   );
 }
 

@@ -134,6 +134,14 @@ body, .app-container {
   background: #2746d7;
 }
 
+.error-message {
+  color: #d32f2f;
+  font-size: 0.875rem;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
 .generate-image-btn {
   background: #e0e0e0;
   color: #333;
