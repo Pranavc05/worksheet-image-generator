@@ -95,7 +95,13 @@ function App() {
         </select>
         {categoryError && <div className="error-message">{categoryError}</div>}
         <label className="include-images-label">
-          <input type="checkbox" checked={includeImages} onChange={e => setIncludeImages(e.target.checked)} /> Check to include images
+          <input type="checkbox" checked={includeImages} onChange={e => {
+            setIncludeImages(e.target.checked);
+            if (!e.target.checked) {
+              setQuestionImages([]);
+              setLoadingImages([]);
+            }
+          }} /> Check to include images
         </label>
         <textarea className="additional-prompt" placeholder="Additional Prompt" value={additionalPrompt} onChange={e => setAdditionalPrompt(e.target.value)} />
         {promptError && <div className="error-message">{promptError}</div>}
@@ -118,16 +124,20 @@ function App() {
             {worksheetQuestions.map((q, idx) => (
               <div className="worksheet-question-card" key={idx}>
                 {q}
-                <button className="generate-image-btn" onClick={() => handleGenerateImage(idx)} disabled={loadingImages[idx]}>
-                  {loadingImages[idx] ? (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <CircularProgress size={16} />
-                      Loading...
-                    </div>
-                  ) : questionImages[idx] ? 'Re-Generate Image' : 'Generate Image'}
-                </button>
-                {questionImages[idx] && (
-                  <img src={questionImages[idx]} alt="Generated visual" className="worksheet-image" />
+                {includeImages && (
+                  <>
+                    <button className="generate-image-btn" onClick={() => handleGenerateImage(idx)} disabled={loadingImages[idx]}>
+                      {loadingImages[idx] ? (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <CircularProgress size={16} />
+                          Loading...
+                        </div>
+                      ) : questionImages[idx] ? 'Re-Generate Image' : 'Generate Image'}
+                    </button>
+                    {questionImages[idx] && (
+                      <img src={questionImages[idx]} alt="Generated visual" className="worksheet-image" />
+                    )}
+                  </>
                 )}
               </div>
             ))}
