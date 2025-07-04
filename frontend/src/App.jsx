@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CircularProgress } from '@mui/material';
 import './App.css';
 
 function App() {
@@ -109,17 +110,22 @@ function App() {
         </div>
         {loadingWorksheet ? (
           <div className="worksheet-loading">
-            <div className="worksheet-spinner"></div>
-            Generating worksheet...
-      </div>
+            <CircularProgress size={40} />
+            <div style={{ marginTop: '16px' }}>Generating worksheet...</div>
+          </div>
         ) : (
           <div className="questions-list">
             {worksheetQuestions.map((q, idx) => (
               <div className="worksheet-question-card" key={idx}>
                 {q}
                 <button className="generate-image-btn" onClick={() => handleGenerateImage(idx)} disabled={loadingImages[idx]}>
-                  {loadingImages[idx] ? 'Loading...' : questionImages[idx] ? 'Re-Generate Image' : 'Generate Image'}
-        </button>
+                  {loadingImages[idx] ? (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <CircularProgress size={16} />
+                      Loading...
+                    </div>
+                  ) : questionImages[idx] ? 'Re-Generate Image' : 'Generate Image'}
+                </button>
                 {questionImages[idx] && (
                   <img src={questionImages[idx]} alt="Generated visual" className="worksheet-image" />
                 )}

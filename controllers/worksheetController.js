@@ -78,7 +78,7 @@ async function generateWorksheetQuestions(prompt) {
 async function generateImage(prompt) {
   const response = await openai.images.generate({
     model: 'dall-e-3',
-    prompt: `Create a simple, clear image for each question presented that helps answer this question: ${prompt}`,
+    prompt: `Create a simple, clear educational image with a pure white background that helps answer this question: ${prompt}. The image should be clean, professional, and suitable for educational worksheets. No text, symbols, or special characters should be included in the image.`,
     quality: 'standard',
     size: '1024x1024',
   });
