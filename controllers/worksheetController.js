@@ -63,8 +63,8 @@ async function generateWorksheetQuestions(prompt) {
     temperature: 0,
     response_format: { type: "json_object" },
     messages: [
-      { role: 'system', content: 'You are a JSON generator that creates worksheet questions. You must respond with a JSON object containing an array of exactly 3 questions, each as a string.' },
-      { role: 'user', content: `${prompt}\n\nReturn a JSON object with this exact structure:\n{"questions": ["What is 2 + 3?", "How many sides does a triangle have?", "What is the capital of France?"]}` },
+      { role: 'system', content: 'You are a JSON generator that creates educational worksheet questions. You must respond with a JSON object containing an array of exactly 3 questions, each as a string. Questions should be clear, age-appropriate, and suitable for special education students.' },
+      { role: 'user', content: `${prompt}\n\nGenerate exactly 3 educational questions. Return a JSON object with this exact structure:\n{"questions": ["What is 2 + 3?", "How many sides does a triangle have?", "What is the capital of France?"]}` },
     ],
   });
   
