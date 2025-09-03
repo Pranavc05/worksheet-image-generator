@@ -253,3 +253,143 @@ body, .app-container {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* Worksheet Header Styles */
+.worksheet-header {
+  border: 2px solid #333;
+  padding: 20px;
+  margin: 20px 0;
+  background: white;
+  border-radius: 8px;
+}
+
+.worksheet-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.student-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.info-field {
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Print Styles */
+@media print {
+  /* Hide all UI elements except the worksheet content */
+  .sidebar,
+  .print-btn,
+  .generate-image-btn,
+  h2:first-of-type {
+    display: none !important;
+  }
+  
+  /* Reset page styling for print */
+  body {
+    background: white !important;
+    font-family: 'Times New Roman', serif;
+    color: black;
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+  
+  .app-container {
+    background: white !important;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .worksheet-area {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 20px !important;
+  }
+  
+  /* Worksheet header styling for print */
+  .worksheet-header {
+    border: 2px solid black;
+    padding: 15px;
+    margin: 0 0 25px 0;
+    background: white;
+    border-radius: 0;
+    page-break-inside: avoid;
+  }
+  
+  .worksheet-title {
+    font-size: 18pt;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    color: black;
+  }
+  
+  .student-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .info-field {
+    font-size: 11pt;
+    color: black;
+    font-weight: normal;
+  }
+  
+  /* Questions layout for print */
+  .questions-list {
+    background: white !important;
+  }
+  
+  .worksheet-question-card {
+    background: white !important;
+    border: 1px solid #ccc;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    page-break-inside: avoid;
+    font-size: 12pt;
+    line-height: 1.6;
+  }
+  
+  .worksheet-question-card:before {
+    content: counter(question-counter) ". ";
+    counter-increment: question-counter;
+    font-weight: bold;
+    font-size: 13pt;
+  }
+  
+  .questions-list {
+    counter-reset: question-counter;
+  }
+  
+  /* Image styling for print */
+  .worksheet-image {
+    max-width: 200px !important;
+    height: auto;
+    border: 1px solid #ddd;
+    margin: 0;
+    flex-shrink: 0;
+  }
+  
+  /* Ensure proper page breaks */
+  .worksheet-header,
+  .worksheet-question-card {
+    page-break-inside: avoid;
+  }
+}

@@ -4,10 +4,16 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
-// Middleware
-app.use(cors());
+// CORS configuration for production
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production' 
+    ? [process.env.FRONTEND_URL || 'https://your-frontend-name.onrender.com']
+    : ['http://localhost:3000', 'http://localhost:5173'],
+  credentials: true
+}));
+
 app.use(express.json());
 
 // MongoDB connection
@@ -21,6 +27,6 @@ const worksheetRoutes = require('./routes/worksheetRoutes');
 app.use('/api', worksheetRoutes);
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 }); 

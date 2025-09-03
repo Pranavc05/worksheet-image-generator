@@ -1,11 +1,13 @@
 {
   "name": "image-generator-for-worksheets",
   "version": "1.0.0",
-  "description": "SpedTree's image generation API for creating educational worksheet images using Vertex AI's Imagen.",
+  "description": "SpedTree's image generation API for creating educational worksheet images using OpenAI's DALL-E 3.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "echo 'Backend build complete'",
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",

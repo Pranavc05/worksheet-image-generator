@@ -34,7 +34,8 @@ function App() {
     try {
       // Combine category and additionalPrompt into a single prompt string
       const prompt = `Generate a worksheet for the category: ${category}. ${additionalPrompt}`;
-      const response = await fetch('/api/generate-worksheet', {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${apiUrl}/api/generate-worksheet`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt }),
@@ -58,7 +59,8 @@ function App() {
     newLoading[idx] = true;
     setLoadingImages(newLoading);
     try {
-      const response = await fetch('/api/generate-image', {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${apiUrl}/api/generate-image`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: worksheetQuestions[idx] }),
@@ -114,6 +116,15 @@ function App() {
             <span role="img" aria-label="print">🖨️</span> Print
           </button>
         </div>
+        
+        <div className="worksheet-header">
+          <div className="worksheet-title">{category.charAt(0).toUpperCase() + category.slice(1)} Worksheet</div>
+          <div className="student-info">
+            <div className="info-field">Name: ________________________</div>
+            <div className="info-field">Date: ________________________</div>
+            <div className="info-field">Class: ________________________</div>
+          </div>
+        </div>
         {loadingWorksheet ? (
           <div className="worksheet-loading">
             <CircularProgress size={40} />
@@ -131,9 +142,9 @@ function App() {
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <CircularProgress size={16} />
                           Loading...
-                        </div>
+      </div>
                       ) : questionImages[idx] ? 'Re-Generate Image' : 'Generate Image'}
-                    </button>
+        </button>
                     {questionImages[idx] && (
                       <img src={questionImages[idx]} alt="Generated visual" className="worksheet-image" />
                     )}
