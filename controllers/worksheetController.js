@@ -75,10 +75,35 @@ async function generateWorksheetQuestions(prompt) {
 }
 
 // Generate an image for a question
-async function generateImage(prompt) {
+async function generateImage(questionText) {
+  // Create a more specific prompt based on question content
+  let imagePrompt = '';
+  
+  // Analyze the question to determine what kind of helpful image to generate
+  const question = questionText.toLowerCase();
+  
+  if (question.includes('fraction') || question.includes('1/2') || question.includes('1/4') || question.includes('0.25') || question.includes('0.5')) {
+    imagePrompt = `Create a simple educational diagram showing fractions visually. Show circles or rectangles divided into equal parts with some parts shaded to represent fractions. Use bright colors on white background. Make it clear and easy for students to understand fractions.`;
+  } else if (question.includes('loop') || question.includes('for') || question.includes('i++') || question.includes('iteration')) {
+    imagePrompt = `Create a simple flowchart diagram showing how a for loop works step by step. Show boxes connected by arrows indicating: START → Check condition → Execute code → Increment counter → Check condition again → END. Use simple shapes and clear arrows on white background.`;
+  } else if (question.includes('triangle') || question.includes('square') || question.includes('circle') || question.includes('shape')) {
+    imagePrompt = `Create simple, clear geometric shapes: a triangle, square, and circle. Each shape should be a different bright color, clearly labeled, and arranged neatly on a white background for easy identification.`;
+  } else if (question.includes('add') || question.includes('+') || question.includes('plus') || question.includes('sum')) {
+    imagePrompt = `Create a visual addition problem using simple objects like apples, dots, or blocks. Show groups of objects that can be counted and added together. Use bright colors on white background.`;
+  } else if (question.includes('count') || question.includes('how many') || question.includes('number')) {
+    imagePrompt = `Create a simple counting visual with clearly countable objects like dots, stars, or simple shapes arranged in an organized way. Use bright colors on white background for easy counting.`;
+  } else if (question.includes('time') || question.includes('clock') || question.includes("o'clock")) {
+    imagePrompt = `Create a simple, clear analog clock face showing a specific time. The clock should have large, easy-to-read numbers and clear hour and minute hands on white background.`;
+  } else if (question.includes('money') || question.includes('cent') || question.includes('dollar') || question.includes('coin')) {
+    imagePrompt = `Create simple, clear images of coins and dollar bills. Show pennies, nickels, dimes, quarters clearly labeled with their values on white background.`;
+  } else {
+    // Generic educational visual
+    imagePrompt = `Create a simple, clear educational illustration that helps students understand the concept in this question: "${questionText}". Use bright colors, simple shapes, and make it very clear and easy to understand on white background. Focus on creating a helpful visual aid.`;
+  }
+  
   const response = await openai.images.generate({
     model: 'dall-e-3',
-    prompt: `Create a simple, clear educational image with a pure white background that helps answer this question: ${prompt}. The image should be clean, professional, and suitable for educational worksheets. No text, symbols, or special characters should be included in the image.`,
+    prompt: imagePrompt,
     quality: 'standard',
     size: '1024x1024',
   });
