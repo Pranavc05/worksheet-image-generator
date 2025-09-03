@@ -85,7 +85,7 @@ async function generateImage(questionText) {
   if (question.includes('fraction') || question.includes('1/2') || question.includes('1/4') || question.includes('0.25') || question.includes('0.5')) {
     imagePrompt = `Create a simple educational diagram showing fractions visually. Show circles or rectangles divided into equal parts with some parts shaded to represent fractions. Use bright colors on white background. Make it clear and easy for students to understand fractions.`;
   } else if (question.includes('loop') || question.includes('for') || question.includes('i++') || question.includes('iteration')) {
-    imagePrompt = `Create a simple flowchart diagram showing how a for loop works step by step. Show boxes connected by arrows indicating: START → Check condition → Execute code → Increment counter → Check condition again → END. Use simple shapes and clear arrows on white background.`;
+    imagePrompt = `Create a simple, clean educational diagram showing the 3 main parts of a for loop: 1) INITIALIZATION (int i = 0), 2) CONDITION (i < 5), 3) INCREMENT (i++). Show these as three clearly labeled boxes in bright colors on a white background. Make it very simple and easy to read for students learning programming.`;
   } else if (question.includes('triangle') || question.includes('square') || question.includes('circle') || question.includes('shape')) {
     imagePrompt = `Create simple, clear geometric shapes: a triangle, square, and circle. Each shape should be a different bright color, clearly labeled, and arranged neatly on a white background for easy identification.`;
   } else if (question.includes('add') || question.includes('+') || question.includes('plus') || question.includes('sum')) {
@@ -98,12 +98,12 @@ async function generateImage(questionText) {
     imagePrompt = `Create simple, clear images of coins and dollar bills. Show pennies, nickels, dimes, quarters clearly labeled with their values on white background.`;
   } else {
     // Generic educational visual
-    imagePrompt = `Create a simple, clear educational illustration that helps students understand the concept in this question: "${questionText}". Use bright colors, simple shapes, and make it very clear and easy to understand on white background. Focus on creating a helpful visual aid.`;
+    imagePrompt = `Create a very simple, clear educational illustration that helps students understand the concept in this question: "${questionText}". Use bright colors, simple shapes, and make it very clear and easy to understand on white background. NO TEXT, NO COMPLEX DIAGRAMS, NO TECHNICAL SYMBOLS. Focus on creating a helpful visual aid that a child could understand.`;
   }
   
   const response = await openai.images.generate({
     model: 'dall-e-3',
-    prompt: imagePrompt,
+    prompt: `${imagePrompt} IMPORTANT: NO text, letters, numbers, or words should appear in the image. Keep it purely visual and simple for young students.`,
     quality: 'standard',
     size: '1024x1024',
   });
