@@ -7,6 +7,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    assetsDir: 'assets',
   },
   server: {
     port: 5173,
@@ -16,5 +17,9 @@ export default defineConfig({
         changeOrigin: true,
       }
     }
+  },
+  base: '/',
+  define: {
+    'process.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL)
   }
 })
